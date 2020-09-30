@@ -1,48 +1,139 @@
-import React, { useState } from "react";
-import { Button, Form } from "react-bootstrap"
+import { makeStyles, TextField, Button } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
 import { getUrl } from '../utils/restClient'
 
+const useStyles = makeStyles(theme => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main
+  },
+  form: {
+    width: "100%",
+    marginTop: theme.spacing(1)
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2)
+  }
+}));
 export default () => {
-  const createUser = async ({ target }) => {
-    const [name, email, username, password] = target;
-    const requestObject = {
-      name,
-      email,
-      username,
-      password
-    }
-    const response = await fetch(`${getUrl()}/account`, {
-      method: 'POST',
-      body: requestObject,
+  const [formValues, setFormValues] = useState({});
+  const classes = useStyles();
+
+  useEffect(() => {
+    t()
+  }, [])
+
+  const t = async () => {
+    const url = getUrl()
+    debugger
+
+    const response1 = await fetch(`${url}/Account`);
+    const data = await response1.json()
+    debugger
+  }
+
+  const createUser = async e => {
+    e.preventDefault();
+    console.log(formValues)
+    const url = getUrl()
+    const response = await fetch(`${url}/Account`, {
+      method: "POST",
+      body: JSON.stringify({
+        "Name": formValues['name'],
+        "Password": formValues['password'],
+        "Username": formValues['username'],
+        "Email": formValues['email']
+      }),
       headers: {
         "Content-Type": "application/json"
       }
     });
-    const data = await response.json();
+    console.log(response)
   }
+
+  const onChange = (field, value) => {
+    const newFormValues = {
+      ...formValues,
+      [field]: value
+    };
+    setFormValues(newFormValues);
+  };
+
   return <div style={{
     margin: "125px 500px"
   }}>
-    <Form onSubmit={createUser}>
-      <Form.Group controlId="name">
-        <Form.Label>Full Name</Form.Label>
-        <Form.Control required type="text" placeholder="Enter your name" />
-      </Form.Group>
-      <Form.Group controlId="emailaddress">
-        <Form.Label>Email</Form.Label>
-        <Form.Control required type="email" placeholder="Enter email" />
-      </Form.Group>
-      <Form.Group controlId="loruser">
-        <Form.Label>LOR Username</Form.Label>
-        <Form.Control required type="text" placeholder="Enter your LOR username" />
-      </Form.Group>
-      <Form.Group controlId="password">
-        <Form.Label>Password</Form.Label>
-        <Form.Control required type="password" autoComplete="off" />
-      </Form.Group>
-      <Button variant="primary" type="submit">
+    <form className={classes.form} noValidate onSubmit={createUser}>
+      <TextField
+        variant="outlined"
+        margin="normal"
+        required
+        fullWidth
+        id="email"
+        label="Email Address"
+        name="email"
+        autoComplete="email1"
+        autoFocus
+        onChange={({ target: { name, value } }) => {
+          onChange(name, value);
+        }}
+      />
+      <TextField
+        variant="outlined"
+        margin="normal"
+        required
+        fullWidth
+        id="name"
+        label="Name"
+        name="name"
+        autoComplete="name1"
+        autoFocus
+        onChange={({ target: { name, value } }) => {
+          onChange(name, value);
+        }}
+      />
+      <TextField
+        variant="outlined"
+        margin="normal"
+        required
+        fullWidth
+        id="username"
+        label="LOR Username"
+        name="username"
+        autoComplete="username1"
+        autoFocus
+        onChange={({ target: { name, value } }) => {
+          onChange(name, value);
+        }}
+      />
+      <TextField
+        variant="outlined"
+        margin="normal"
+        required
+        fullWidth
+        name="password"
+        label="Password"
+        type="password"
+        id="password"
+        autoComplete="current-password"
+        onChange={({ target: { name, value } }) => {
+          onChange(name, value);
+        }}
+      />
+      <Button
+        type="submit"
+        fullWidth
+        variant="contained"
+        color="primary"
+        className={classes.submit}
+      >
         Create
-      </Button>
-    </Form>
+        </Button>
+    </form>
   </div>
 };
