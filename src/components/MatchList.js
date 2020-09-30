@@ -3,6 +3,7 @@ import { getUrl } from "../utils/restClient";
 import MatchForm from "./MatchForm";
 import Table from "./Table";
 import UserContext from "./UserContext";
+import Cookie from "js-cookie";
 
 const columns = [
   {
@@ -39,13 +40,15 @@ export default () => {
   };
 
   const loadWinrate = async () => {
-    const response = await fetch(`${getUrl()}/Account/Winrate?account=7`);
+    const id = Cookie.get("user") ? Cookie.get("user") : null;
+    const response = await fetch(`${getUrl()}/Account/Winrate?account=${id}`);
     const data = await response.json();
     setWinrate(data);
   };
 
   const loadMatches = async () => {
-    const response = await fetch(`${getUrl()}/Match/?request=7`);
+    const id = Cookie.get("user") ? Cookie.get("user") : null;
+    const response = await fetch(`${getUrl()}/Match/?request=${id}`);
     const data = await response.json();
     setMatches(data);
   };

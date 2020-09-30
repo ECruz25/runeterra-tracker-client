@@ -1,26 +1,30 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Redirect } from 'react-router-dom'
-import UserContext from './UserContext';
+import React, { useContext, useEffect, useState } from "react";
+import { Redirect } from "react-router-dom";
+import UserContext from "./UserContext";
+import Cookie from "js-cookie";
 
 export default function withAuth(ComponentToProtect) {
   return (props) => {
     const { user } = useContext(UserContext);
-    const [redirect, setRedirect] = useState(false)
+    const [redirect, setRedirect] = useState(false);
 
     useEffect(() => {
-      if (user) {
-        setRedirect(false)
+      const id = Cookie.get("user") ? Cookie.get("user") : null;
+      debugger;
+      if (id) {
+        setRedirect(false);
       } else {
-        setRedirect(false)
+        setRedirect(true);
       }
-    }, [user])
+    });
     if (redirect) {
-      return <Redirect to="/login"></Redirect>
+      return <Redirect to="/login"></Redirect>;
+    } else {
+      return (
+        <React.Fragment>
+          <ComponentToProtect {...props} />
+        </React.Fragment>
+      );
     }
-    else {
-      return (<React.Fragment>
-        <ComponentToProtect {...props} />
-      </React.Fragment>)
-    }
-  }
+  };
 }
