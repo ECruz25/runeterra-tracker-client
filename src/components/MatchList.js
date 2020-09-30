@@ -4,6 +4,7 @@ import MatchForm from "./MatchForm";
 import Table from "./Table";
 import UserContext from "./UserContext";
 import Cookie from "js-cookie";
+import Dialog from "./Dialog";
 
 const columns = [
   {
@@ -25,6 +26,8 @@ export default () => {
   const [matches, setMatches] = useState([]);
   const [newMatchValues, setNewMatchValues] = useState({});
   const [winrate, setWinrate] = useState(1);
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     loadMatches();
@@ -56,22 +59,27 @@ export default () => {
   const submitNewMatch = async (e) => {
     e.preventDefault();
     if (!newMatchValues.deckId) {
-      return;
+      setShowError(true);
+      setErrorMessage({
+        message: "Check values you have entered",
+        title: "Missing Deck Id",
+      });
+    } else {
+      const requestObject = {
+        accountId: 7,
+        deckId: newMatchValues.deckId,
+        result: newMatchValues.win ? "WIN" : "LOSS",
+      };
+      const fetchOptions = {
+        method: "POST",
+        body: JSON.stringify(requestObject),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      await fetch(`${getUrl()}/Match`, fetchOptions);
+      setNewMatchValues({});
     }
-    const requestObject = {
-      accountId: 7,
-      deckId: newMatchValues.deckId,
-      result: newMatchValues.win ? "WIN" : "LOSS",
-    };
-    const fetchOptions = {
-      method: "POST",
-      body: JSON.stringify(requestObject),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    await fetch(`${getUrl()}/Match`, fetchOptions);
-    setNewMatchValues({});
   };
 
   return (
@@ -83,6 +91,9 @@ export default () => {
         columnGap: 30,
       }}
     >
+      {showError && (
+        <Dialog message={errorMessage} setShow={setShowError}></Dialog>
+      )}
       <Table data={matches} columns={columns} />
       <MatchForm onChange={onChange} onSubmit={submitNewMatch} />
     </div>
