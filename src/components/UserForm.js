@@ -1,9 +1,24 @@
 import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap"
+import { getUrl } from '../utils/restClient'
 
 export default () => {
-  const createUser = () => {
-
+  const createUser = async ({ target }) => {
+    const [name, email, username, password] = target;
+    const requestObject = {
+      name,
+      email,
+      username,
+      password
+    }
+    const response = await fetch(`${getUrl()}/account`, {
+      method: 'POST',
+      body: requestObject,
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+    const data = await response.json();
   }
   return <div style={{
     margin: "125px 500px"
