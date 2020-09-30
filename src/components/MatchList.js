@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { getUrl } from '../utils/restClient';
 import MatchForm from './MatchForm';
+import Table from './Table';
 import UserContext from './UserContext';
 
 export default () => {
@@ -29,5 +30,23 @@ export default () => {
     const data = await response.json()
     setMatches(data)
   }
-  return <div><div>Hi</div><MatchForm onChange={onChange}></MatchForm></div>
+
+  const submitNewMatch = async () => { }
+
+  return (
+    <div style={{
+      display: "grid",
+      gridTemplateColumns: "70% 30%",
+      margin: "60px 100px"
+    }}>
+      <Table data={matches} columns={[{
+        name: 'DeckId',
+        index: 1,
+        title: 'DeckId',
+        dataIndex: 'DeckId',
+        key: 'DeckId'
+      }]}></Table>
+      <MatchForm onChange={onChange}></MatchForm>
+    </div>
+  );
 }

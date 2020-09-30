@@ -27,7 +27,7 @@ export default ({ onChange }) => {
             color="primary"
           />
         }
-        label="Primary"
+        label="Win"
       />
       <Button
         type="submit"
@@ -35,7 +35,7 @@ export default ({ onChange }) => {
         variant="contained"
         color="primary"
       >
-        Save Match
+        Create Match
       </Button>
     </form>
   )
