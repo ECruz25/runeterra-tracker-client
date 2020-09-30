@@ -1,9 +1,9 @@
 import { Button, Checkbox, FormControlLabel, TextField } from '@material-ui/core';
 import React from 'react';
 
-export default ({ onChange }) => {
+export default ({ onChange, onSubmit }) => {
   return (
-    <form>
+    <form noValidate onSubmit={onSubmit}>
       <TextField
         variant="outlined"
         margin="normal"
@@ -20,8 +20,8 @@ export default ({ onChange }) => {
       <FormControlLabel
         control={
           <Checkbox
-            onChange={({ target: { name, value } }) => {
-              onChange(name, value);
+            onChange={({ target: { name, checked } }) => {
+              onChange(name, checked);
             }}
             name="win"
             color="primary"

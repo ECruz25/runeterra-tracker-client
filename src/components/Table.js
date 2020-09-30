@@ -11,17 +11,16 @@ import { TablePagination } from "@material-ui/core";
 
 const useStyles = makeStyles({
   table: {
-    minWidth: 650
-  }
+    minWidth: 650,
+  },
 });
 
 export default ({ columns, data, rowsPerPageFromProp = 10 }) => {
   const [page, setPage] = useState(0);
   const classes = useStyles();
   const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageFromProp);
-  debugger
   if (data.length === 0) {
-    return <div>Nothing to show</div>
+    return <div>Nothing to show</div>;
   }
   return (
     <Paper>
@@ -29,18 +28,18 @@ export default ({ columns, data, rowsPerPageFromProp = 10 }) => {
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
-              {columns.map(column => (
-                <TableCell align="left">{column}</TableCell>
+              {columns.map((column) => (
+                <TableCell align="left">{column["title"]}</TableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
             {data
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map(row => (
+              .map((row) => (
                 <TableRow>
-                  {columns.map(column => (
-                    <TableCell align="left">{row[column]}</TableCell>
+                  {columns.map((column) => (
+                    <TableCell align="left">{row[column["key"]]}</TableCell>
                   ))}
                 </TableRow>
               ))}
@@ -54,7 +53,7 @@ export default ({ columns, data, rowsPerPageFromProp = 10 }) => {
         rowsPerPage={rowsPerPage}
         page={page}
         onChangePage={(e, newPage) => setPage(newPage)}
-        onChangeRowsPerPage={e => {
+        onChangeRowsPerPage={(e) => {
           setRowsPerPage(parseInt(e.target.value, 10));
           setPage(0);
         }}
