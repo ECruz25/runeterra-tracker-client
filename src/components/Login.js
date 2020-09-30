@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(3, 0, 2)
   }
 }));
-export default () => {
+export default ({ history }) => {
   const [formValues, setFormValues] = useState({});
   const classes = useStyles();
   const { setUser } = useContext(UserContext);
@@ -40,6 +40,7 @@ export default () => {
       }
     });
     const data = await response.json()
+    history.push("/");
     setUser(data);
   }
 

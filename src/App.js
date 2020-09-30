@@ -7,6 +7,8 @@ import { useMediaQuery } from "@material-ui/core";
 import { UserProvider } from "./components/UserContext";
 import './App.css';
 import Login from './components/Login';
+import MatchList from './components/MatchList';
+import withAuth from './components/withAuth';
 
 function App() {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
@@ -30,6 +32,7 @@ function App() {
           <UserProvider>
             <Route path="/signup" exact component={UserForm} />
             <Route path="/login" exact component={Login} />
+            <Route path="/" exact component={withAuth(MatchList)} />
           </UserProvider>
         </Switch>
       </Router>
