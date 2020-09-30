@@ -1,4 +1,4 @@
-import { makeStyles, TextField, Button } from "@material-ui/core";
+import { makeStyles, TextField, Button, Typography } from "@material-ui/core";
 import React, { useContext, useEffect, useState } from "react";
 import { getUrl } from "../utils/restClient";
 import UserContext from "./UserContext";
@@ -59,6 +59,7 @@ export default ({ history }) => {
       history.push("/");
       setUser(data);
       Cookie.set("user", data.accountid);
+      Cookie.set("username", data.username);
     }
   };
 
@@ -76,6 +77,14 @@ export default ({ history }) => {
         margin: "125px 500px",
       }}
     >
+      <div style={{ textAlign: "center" }}>
+        <Typography component="h1" variant="h5">
+          Legends Of Runeterra Tracker
+        </Typography>
+        <Typography component="h1" variant="h6">
+          Login
+        </Typography>
+      </div>
       {showError && (
         <Dialog message={errorMessage} setShow={setShowError}></Dialog>
       )}

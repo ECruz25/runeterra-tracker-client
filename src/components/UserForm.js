@@ -1,4 +1,4 @@
-import { makeStyles, TextField, Button } from "@material-ui/core";
+import { makeStyles, TextField, Button, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { getUrl } from "../utils/restClient";
 import Dialog from "./Dialog";
@@ -77,6 +77,14 @@ export default () => {
         margin: "125px 500px",
       }}
     >
+      <div style={{ textAlign: "center" }}>
+        <Typography component="h1" variant="h5">
+          Legends Of Runeterra Tracker
+        </Typography>
+        <Typography component="h1" variant="h6">
+          Sign Up
+        </Typography>
+      </div>
       {showError && (
         <Dialog message={errorMessage} setShow={setShowError}></Dialog>
       )}

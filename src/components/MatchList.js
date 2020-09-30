@@ -5,6 +5,7 @@ import Table from "./Table";
 import UserContext from "./UserContext";
 import Cookie from "js-cookie";
 import Dialog from "./Dialog";
+import { Typography } from "@material-ui/core";
 
 const columns = [
   {
@@ -26,12 +27,15 @@ export default () => {
   const [matches, setMatches] = useState([]);
   const [newMatchValues, setNewMatchValues] = useState({});
   const [winrate, setWinrate] = useState(1);
+  const [username, setUsername] = useState("");
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     loadMatches();
     loadWinrate();
+    const name = Cookie.get("username") ? Cookie.get("username") : null;
+    setUsername(name);
   }, []);
 
   const onChange = (field, value) => {
@@ -94,8 +98,20 @@ export default () => {
       {showError && (
         <Dialog message={errorMessage} setShow={setShowError}></Dialog>
       )}
-      <Table data={matches} columns={columns} />
-      <MatchForm onChange={onChange} onSubmit={submitNewMatch} />
+      <div>
+        {username && (
+          <Typography component="h1" variant="h5" style={{ marginBottom: 20 }}>
+            {`Hi, ${username}`}
+          </Typography>
+        )}
+        <Table data={matches} columns={columns} />
+      </div>
+      <div>
+        <Typography component="h2" variant="h6" style={{ marginBottom: 10 }}>
+          Just played a match? Add it to your history
+        </Typography>
+        <MatchForm onChange={onChange} onSubmit={submitNewMatch} />
+      </div>
     </div>
   );
 };
