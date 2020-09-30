@@ -23,17 +23,14 @@ const columns = [
 ];
 
 export default () => {
-  const { user } = useContext(UserContext);
   const [matches, setMatches] = useState([]);
   const [newMatchValues, setNewMatchValues] = useState({});
-  const [winrate, setWinrate] = useState(1);
   const [username, setUsername] = useState("");
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     loadMatches();
-    loadWinrate();
     const name = Cookie.get("username") ? Cookie.get("username") : null;
     setUsername(name);
   }, []);
@@ -44,13 +41,6 @@ export default () => {
       [field]: value,
     };
     setNewMatchValues(newFormValues);
-  };
-
-  const loadWinrate = async () => {
-    const id = Cookie.get("user") ? Cookie.get("user") : null;
-    const response = await fetch(`${getUrl()}/Account/Winrate?account=${id}`);
-    const data = await response.json();
-    setWinrate(data);
   };
 
   const loadMatches = async () => {
