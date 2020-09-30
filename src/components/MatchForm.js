@@ -1,9 +1,14 @@
-import { Button, Checkbox, FormControlLabel, TextField } from '@material-ui/core';
-import React from 'react';
+import {
+  Button,
+  Checkbox,
+  FormControlLabel,
+  TextField,
+} from "@material-ui/core";
+import React from "react";
 
 export default ({ onChange, onSubmit }) => {
   return (
-    <form noValidate onSubmit={onSubmit}>
+    <form onSubmit={onSubmit}>
       <TextField
         variant="outlined"
         margin="normal"
@@ -29,14 +34,9 @@ export default ({ onChange, onSubmit }) => {
         }
         label="Win"
       />
-      <Button
-        type="submit"
-        fullWidth
-        variant="contained"
-        color="primary"
-      >
+      <Button type="submit" fullWidth variant="contained" color="primary">
         Create Match
       </Button>
     </form>
-  )
-}
+  );
+};

@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { getUrl } from "../utils/restClient";
 import UserContext from "./UserContext";
 import Cookie from "js-cookie";
+import Dialog from "./Dialog";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -25,8 +26,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default ({ history }) => {
   const [formValues, setFormValues] = useState({});
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const classes = useStyles();
   const { setUser } = useContext(UserContext);
+
+  useEffect(() => {
+    const id = Cookie.get("user") ? Cookie.get("user") : null;
+    if (id) {
+      history.push("/");
+    }
+  }, []);
+
   const login = async (e) => {
     e.preventDefault();
     const url = getUrl();
@@ -41,10 +52,15 @@ export default ({ history }) => {
       },
     });
     const data = await response.json();
-    debugger;
-    history.push("/");
-    setUser(data);
-    Cookie.set("user", data.accountid);
+    if (data && data.message) {
+      setShowError(true);
+      setErrorMessage({ message: data.message, title: data.title });
+      debugger;
+    } else {
+      history.push("/");
+      setUser(data);
+      Cookie.set("user", data.accountid);
+    }
   };
 
   const onChange = (field, value) => {
@@ -61,6 +77,9 @@ export default ({ history }) => {
         margin: "125px 500px",
       }}
     >
+      {showError && (
+        <Dialog message={errorMessage} setShow={setShowError}></Dialog>
+      )}
       <form className={classes.form} noValidate onSubmit={login}>
         <TextField
           variant="outlined"
