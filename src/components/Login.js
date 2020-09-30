@@ -55,7 +55,6 @@ export default ({ history }) => {
     if (data && data.message) {
       setShowError(true);
       setErrorMessage({ message: data.message, title: data.title });
-      debugger;
     } else {
       history.push("/");
       setUser(data);
