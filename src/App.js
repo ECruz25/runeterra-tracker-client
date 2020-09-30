@@ -4,7 +4,9 @@ import UserForm from './components/UserForm'
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import { useMediaQuery } from "@material-ui/core";
+import { UserProvider } from "./components/UserContext";
 import './App.css';
+import Login from './components/Login';
 
 function App() {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
@@ -25,7 +27,10 @@ function App() {
     <ThemeProvider theme={theme}>
       <Router>
         <Switch>
-          <Route path="/signup" exact component={UserForm} />
+          <UserProvider>
+            <Route path="/signup" exact component={UserForm} />
+            <Route path="/login" exact component={Login} />
+          </UserProvider>
         </Switch>
       </Router>
     </ThemeProvider>

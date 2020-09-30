@@ -25,22 +25,8 @@ export default () => {
   const [formValues, setFormValues] = useState({});
   const classes = useStyles();
 
-  useEffect(() => {
-    t()
-  }, [])
-
-  const t = async () => {
-    const url = getUrl()
-    debugger
-
-    const response1 = await fetch(`${url}/Account`);
-    const data = await response1.json()
-    debugger
-  }
-
   const createUser = async e => {
     e.preventDefault();
-    console.log(formValues)
     const url = getUrl()
     const response = await fetch(`${url}/Account`, {
       method: "POST",
@@ -54,7 +40,6 @@ export default () => {
         "Content-Type": "application/json"
       }
     });
-    console.log(response)
   }
 
   const onChange = (field, value) => {
