@@ -55,11 +55,13 @@ export default () => {
     const id = Cookie.get("user") ? Cookie.get("user") : null;
     const response = await fetch(`${getUrl()}/Match/?request=${id}`);
     const data = await response.json();
-    const builtData = data.map((t) => ({
-      ...t,
-      champions: championsByDeck(t.deckid, champions),
-    }));
-    setMatches(builtData);
+    if (data) {
+      const builtData = data.map((t) => ({
+        ...t,
+        champions: championsByDeck(t.deckid, champions),
+      }));
+      setMatches(builtData);
+    }
   };
 
   const championsByDeck = (deckCode, champions) => {

@@ -1,9 +1,16 @@
-import { makeStyles, TextField, Button, Typography } from "@material-ui/core";
+import {
+  makeStyles,
+  TextField,
+  Button,
+  Typography,
+  Grid,
+} from "@material-ui/core";
 import React, { useContext, useEffect, useState } from "react";
 import { getUrl } from "../utils/restClient";
 import UserContext from "./UserContext";
 import Cookie from "js-cookie";
 import Dialog from "./Dialog";
+import Link from "@material-ui/core/Link";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -126,6 +133,11 @@ export default ({ history }) => {
         >
           Login
         </Button>
+        <Grid container justify="flex-end">
+          <Link href="/signup" variant="body2">
+            {"No account? Sign Up."}
+          </Link>
+        </Grid>
       </form>
     </div>
   );

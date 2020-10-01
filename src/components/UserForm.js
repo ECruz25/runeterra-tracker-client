@@ -1,4 +1,11 @@
-import { makeStyles, TextField, Button, Typography } from "@material-ui/core";
+import {
+  makeStyles,
+  TextField,
+  Button,
+  Typography,
+  Grid,
+  Link,
+} from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { getUrl } from "../utils/restClient";
 import Dialog from "./Dialog";
@@ -71,7 +78,7 @@ export default () => {
   return (
     <div
       style={{
-        margin: "125px 500px",
+        margin: "75px 500px",
       }}
     >
       <div style={{ textAlign: "center" }}>
@@ -151,6 +158,11 @@ export default () => {
         >
           Create
         </Button>
+        <Grid container justify="flex-end">
+          <Link href="/login" variant="body2">
+            {"Already have an account?"}
+          </Link>
+        </Grid>
       </form>
     </div>
   );
