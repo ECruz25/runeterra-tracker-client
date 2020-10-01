@@ -53,15 +53,12 @@ export default () => {
     }
   };
 
-  const checkAllValuesEntered = () => {
-    return (
-      formValues &&
-      formValues["name"] &&
-      formValues["password"] &&
-      formValues["username"] &&
-      formValues["email"]
-    );
-  };
+  const checkAllValuesEntered = () =>
+    formValues &&
+    formValues["name"] &&
+    formValues["password"] &&
+    formValues["username"] &&
+    formValues["email"];
 
   const onChange = (field, value) => {
     const newFormValues = {

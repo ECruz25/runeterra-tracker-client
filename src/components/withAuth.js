@@ -10,7 +10,6 @@ export default function withAuth(ComponentToProtect) {
 
     useEffect(() => {
       const id = Cookie.get("user") ? Cookie.get("user") : null;
-      debugger;
       if (id) {
         setRedirect(false);
       } else {
